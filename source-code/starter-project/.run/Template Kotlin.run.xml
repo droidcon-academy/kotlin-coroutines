@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="true" type="JetRunConfigurationType">
+    <module name="Kotlin Scripts.KotlinSettingsScript.settings.gradle.kts" />
+    <shortenClasspath name="NONE" />
+    <option name="VM_PARAMETERS" value="-Dkotlinx.coroutines.debug=on" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
