@@ -1,43 +1,35 @@
-package org.example.section7
-
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.example.log
+import org.example.section1.Shopper
 
 fun main(): Unit = runBlocking {
+    val shoppers = listOf(
+        Shopper("Jake", 3),
+        Shopper("Zubin", 4),
+        Shopper("Amber", 4),
+        Shopper("Ren", 3),
+    )
+    val orderOfCheckout = mutableListOf<Shopper>()
 
-    val channel = Channel<Int>()                  // <-- add channel
-    val order = mutableListOf<Int>()
-
-
-    (1..5).forEach { num ->
+    shoppers.forEach { shopper ->
         launch(Dispatchers.Default) {
-             channel.checkoutShopper(num)         // <-- add channel
-            log("curr order in child launch: ${order.map { it }}")
+            orderOfCheckout.checkoutShopper(shopper)
+            log("curr order in child launch: ${shopper.name} order in child launch: ${orderOfCheckout.map { it.name }}")
         }
+        repeat(shoppers.size) {
+            log("curr order in parent		: ${orderOfCheckout.map { it.name }}")
+        }
+
+        println("Final order: ${orderOfCheckout.map { it.name }}")
     }
-
-    repeat(5) {
-         order.add(channel.receive())        // <-- receive in parent
-        log("curr order in parent      : ${order.map { it }}")
-    }
-
-
-    println("Final order: ${order.map { it }}")
 }
 
+data class Shopper(val name: String, val groceryCartItems: Int)
 
-// Make extension function for Channel
-internal suspend fun Channel<Int>.checkoutShopper(num: Int) {
-    delay(10)                  // simulate background work
-    this.send(num)             // send result from child
+private suspend fun MutableList<Shopper>.checkoutShopper(shopper: Shopper) {
+    delay(10)	// simulate background work
+    this.add(shopper)
 }
-
-suspend fun MutableList<Int>.checkoutShopper(num: Int) {
-    delay(10)                  // simulate background work
-    this.add(num)
-}
-

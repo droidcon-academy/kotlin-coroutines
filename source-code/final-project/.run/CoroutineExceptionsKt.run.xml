@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CoroutineExceptionsKt" type="JetRunConfigurationType" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="org.example.section6.CoroutineExceptionsKt" />
+    <module name="coroutines-kotlin-droidcon.main" />
+    <option name="VM_PARAMETERS" value="-Dkotlinx.coroutines.debug=on" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

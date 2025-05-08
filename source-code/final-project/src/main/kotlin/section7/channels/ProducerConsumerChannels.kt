@@ -18,10 +18,10 @@ fun main(): Unit = runBlocking {
         Shopper("Amber", 4),
         Shopper("REE", 3),
     )
-    val checkoutLane1: ReceiveChannel<Shopper> = checkoutLane(shoppers)
+    val checkoutLane: ReceiveChannel<Shopper> = checkoutLane(shoppers) // does it not need to close?
     val orderOfCheckout = mutableListOf<Shopper>()
 
-    for (shopper in checkoutLane1) {
+    for (shopper in checkoutLane) {
         orderOfCheckout.add(shopper)
         log("curr order in parent      : ${orderOfCheckout.map { it.name }}")
     }
@@ -30,7 +30,7 @@ fun main(): Unit = runBlocking {
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun CoroutineScope.checkoutLane(shoppers: List<Shopper>) = produce {
+private fun CoroutineScope.checkoutLane(shoppers: List<Shopper>) = produce {
     shoppers.forEach { shopper ->
         delay(10)
         send(shopper)

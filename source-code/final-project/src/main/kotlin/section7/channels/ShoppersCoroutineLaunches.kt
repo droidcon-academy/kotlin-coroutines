@@ -17,35 +17,31 @@ fun main(): Unit = runBlocking {
         Shopper("Amber", 4),
         Shopper("REE", 3),
     )
-    val channel = Channel<Shopper>()
+    val channel = Channel<Shopper>()			           // <-- 1. add here
     val orderOfCheckout = mutableListOf<Shopper>()
 
 
     shoppers.forEach { shopper ->
         launch(Dispatchers.Default) {
-            channel.checkoutShopper(shopper)
+            channel.checkoutShopper(shopper)               // <-- 2. send elements from channel
             log("curr order in child launch: ${orderOfCheckout.map { it.name }}")
         }
     }
 
-    repeat(shoppers.size + 1) {
-        orderOfCheckout.add(channel.receive())
-        log("curr order in parent      : ${orderOfCheckout.map { it.name }}")
+    for (i in channel) {
+        orderOfCheckout.add(i)                               // <-- 3. receive elements here
+        log("Received in parent: ${i.name}")
+        log("Current checkout order: ${orderOfCheckout.map { it.name }}")
     }
 
-
+    channel.close()
     println("Final order: ${orderOfCheckout.map { it.name }}")
 }
 
 
-// Make extension function for Channel
-suspend fun Channel<Shopper>.checkoutShopper(shopper: Shopper) {
-    delay(10) // simulate background work
-    this.send(shopper)               // send result from child
+// Channel extension function
+private suspend fun Channel<Shopper>.checkoutShopper(shopper: Shopper) {
+    delay(10)                  // simulate background work
+    this.send(shopper)         // send result from child
 }
-
-/*suspend fun MutableList<Shopper>.checkoutShopper(shopper: Shopper) {
-    delay(10) // simulate background work
-    this.add(shopper)
-}*/
 
