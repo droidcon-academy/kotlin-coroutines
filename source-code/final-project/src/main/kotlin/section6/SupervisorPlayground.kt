@@ -18,13 +18,14 @@ fun main() = runBlocking {
     val scope = CoroutineScope(SupervisorJob())
 
     val job1 = scope.launch(Dispatchers.Default) {
-        supervisorScope {
+        //supervisorScope {
             log("    job1 launched      ")
             val task1 = launch {
                 log("        task1 launch    ")
-                throw Exception("task1 failed here!")
+                throw Exception("job1 failed here!")
                 log("        task1 complete   ")
-            }
+            }.join()
+
             log("    creating task2      ")
 
             val task2 = launch {
@@ -32,7 +33,7 @@ fun main() = runBlocking {
                 log("        task2 complete   ")
             }
             log("    job1 complete      ")
-       }
+       // }
     }.join()
 
     val job2 = scope.launch {

@@ -1,5 +1,6 @@
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.example.log
@@ -14,22 +15,19 @@ fun main(): Unit = runBlocking {
     )
     val orderOfCheckout = mutableListOf<Shopper>()
 
-    shoppers.forEach { shopper ->
+    val producers = shoppers.map { shopper ->
         launch(Dispatchers.Default) {
-            orderOfCheckout.checkoutShopper(shopper)
-            log("curr order in child launch: ${shopper.name} order in child launch: ${orderOfCheckout.map { it.name }}")
+            log("sending: ${shopper.name}")
+            orderOfCheckout.checkoutShopper(shopper, orderOfCheckout)
         }
-        repeat(shoppers.size) {
-            log("curr order in parent		: ${orderOfCheckout.map { it.name }}")
-        }
+    }.joinAll()
 
-        println("Final order: ${orderOfCheckout.map { it.name }}")
-    }
+    println("final order: ${orderOfCheckout.map { it.name }}")
 }
 
-data class Shopper(val name: String, val groceryCartItems: Int)
-
-private suspend fun MutableList<Shopper>.checkoutShopper(shopper: Shopper) {
+private suspend fun MutableList<Shopper>.checkoutShopper(shopper: Shopper, orderOfCheckout: List<Shopper>) {
     delay(10)	// simulate background work
+    println("received: ${shopper.name}")
     this.add(shopper)
+    log("curr checkout snapshot: ${orderOfCheckout.map { it.name }}")
 }

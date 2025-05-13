@@ -19,19 +19,6 @@ data class Shopper(
     val groceryCartItems: Int,
 )
 
-fun main(): Unit = runBlocking {
-
-    val shoppers = listOf(
-        Shopper("Jake", 3),
-        Shopper("Zubin", 5),
-        Shopper("Amber", 4),
-        Shopper("REE", 3)
-    )
-
-    val register = Register(this)
-    register.startCheckout(shoppers)
-}
-
 sealed class CheckoutState {
     data object NotStarted : CheckoutState()
     data object InProgress : CheckoutState()
@@ -39,6 +26,18 @@ sealed class CheckoutState {
     data class CheckoutError(val error: Error) : CheckoutState()
 }
 
+fun main(): Unit = runBlocking {
+
+    val shoppers = listOf(
+        Shopper("Jake", 3),
+        Shopper("Zubin", 5),
+        Shopper("Amber", 4),
+        Shopper("Ren", 3)
+    )
+
+    val register = Register(this)
+    register.startCheckout(shoppers)
+}
 
 class Register(
     val scope: CoroutineScope,
@@ -50,23 +49,23 @@ class Register(
             checkoutShopper.state.collect { state ->
                 when (state) {
                     is CheckoutState.NotStarted -> {
-                        log("State: CheckoutState.NotStarted - Register is not active.")
+                        log("CheckoutState: NotStarted - Register is not active.")
                     }
                     is CheckoutState.InProgress -> {
-                        log("State: CheckoutState.InProgress - Register is starting checkout.")
+                        log("CheckoutState: InProgress - Register is starting checkout.")
                     }
                     is CheckoutState.CheckoutError -> {
-                        log("State: CheckoutState.CheckoutError - Checkout failed. " +
+                        log("CheckoutState: CheckoutError - Checkout failed. " +
                                 "Cause of error: ${state.error.message}.")
                     }
                     is CheckoutState.CheckoutSuccess ->  {
-                        log("State: CheckoutState.CheckoutSuccess - Checkout success for ${state.shopper.name}.")
+                        log("CheckoutState: CheckoutSuccess - Checkout success " +
+                                "for ${state.shopper.name}.")
                     }
                 }
             }
         }
     }
-
 
     fun startCheckout(shoppers: List<Shopper>) {
         scope.launch(Dispatchers.Default) {

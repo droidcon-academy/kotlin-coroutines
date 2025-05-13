@@ -3,11 +3,12 @@ package org.example.section7.channels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.example.log
-
-data class Shopper(val name: String, val groceryCartItems: Int)
+import org.example.section7.Shopper
+import java.util.Collections
 
 fun main(): Unit = runBlocking {
 
@@ -15,26 +16,28 @@ fun main(): Unit = runBlocking {
         Shopper("Jake", 3),
         Shopper("Zubin", 5),
         Shopper("Amber", 4),
-        Shopper("REE", 3),
+        Shopper("Ren", 3),
     )
     val channel = Channel<Shopper>()			           // <-- 1. add here
-    val orderOfCheckout = mutableListOf<Shopper>()
+    val orderOfCheckout = Collections.synchronizedList<Shopper>(mutableListOf<Shopper>())
 
-
-    shoppers.forEach { shopper ->
-        launch(Dispatchers.Default) {
+    val producers = launch(Dispatchers.Default) {
+        shoppers.map { shopper ->
             channel.checkoutShopper(shopper)               // <-- 2. send elements from channel
-            log("curr order in child launch: ${orderOfCheckout.map { it.name }}")
+            log("curr order in child launch: ${shopper.name}       | snapshot: ${orderOfCheckout.map { it.name }}")
         }
     }
 
-    for (i in channel) {
-        orderOfCheckout.add(i)                               // <-- 3. receive elements here
-        log("Received in parent: ${i.name}")
-        log("Current checkout order: ${orderOfCheckout.map { it.name }}")
+    val consumer = launch(Dispatchers.Default) {
+        for (i in channel) {
+            orderOfCheckout.add(i)
+            log("curr order in parent: ${orderOfCheckout.map { it.name }}      ")
+        }
     }
 
+    producers.join()
     channel.close()
+    consumer.join()
     println("Final order: ${orderOfCheckout.map { it.name }}")
 }
 

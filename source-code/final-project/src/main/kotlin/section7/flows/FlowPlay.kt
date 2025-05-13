@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.runBlocking
 import org.example.log
-import org.example.section7.channels.Shopper
 
 fun main(): Unit = runBlocking {
 
