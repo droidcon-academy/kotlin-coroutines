@@ -25,7 +25,7 @@ fun main(): Unit = runBlocking {
         log("curr order in parent      : ${orderOfCheckout.map { it.name }}")
     }
 
-    println("Final order: ${orderOfCheckout.map { it.name }}")
+    println("final order: ${orderOfCheckout.map { it.name }}")
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -26,7 +26,7 @@ fun main(): Unit = runBlocking {
             channel.checkoutShopper(shopper)               // <-- 2. send elements from channel
             log("curr order in child launch: ${shopper.name}       | snapshot: ${orderOfCheckout.map { it.name }}")
         }
-    }
+    }.join()
 
     val consumer = launch(Dispatchers.Default) {
         for (i in channel) {
@@ -35,7 +35,6 @@ fun main(): Unit = runBlocking {
         }
     }
 
-    producers.join()
     channel.close()
     consumer.join()
     println("Final order: ${orderOfCheckout.map { it.name }}")
