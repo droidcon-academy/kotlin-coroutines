@@ -7,8 +7,8 @@ import kotlinx.coroutines.launch
 import org.example.log
 import org.example.section8.CoroutineContextProvider
 import org.example.section8.CoroutineContextProviderImpl
-import org.example.section8.domain.models.CheckoutState
-import org.example.section8.domain.models.Shopper
+import org.example.section8.domain.model.CheckoutState
+import org.example.section8.domain.model.Shopper
 
 class Register(
     val scope: CoroutineScope,

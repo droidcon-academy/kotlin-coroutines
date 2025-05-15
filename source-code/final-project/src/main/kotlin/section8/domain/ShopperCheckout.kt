@@ -10,8 +10,8 @@ import org.example.section8.CoroutineContextProvider
 import org.example.section8.CoroutineContextProviderImpl
 import org.example.section8.Result
 import org.example.section8.data.LoyalShopperRepository
-import org.example.section8.domain.models.CheckoutState
-import org.example.section8.domain.models.Shopper
+import org.example.section8.domain.model.CheckoutState
+import org.example.section8.domain.model.Shopper
 
 val ceh = CoroutineExceptionHandler { _, e ->
     println("CEH caught unhandled exception $e")

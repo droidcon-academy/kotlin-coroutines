@@ -1,4 +1,4 @@
-package org.example.section8.domain.models
+package org.example.section8.domain.model
 
 data class Shopper(
     val shopperId: String,

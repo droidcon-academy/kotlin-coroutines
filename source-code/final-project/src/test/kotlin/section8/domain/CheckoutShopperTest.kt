@@ -8,8 +8,8 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.example.section8.Result
 import org.example.section8.domain.CheckoutShopper
-import org.example.section8.domain.models.CheckoutState
-import org.example.section8.domain.models.Shopper
+import org.example.section8.domain.model.CheckoutState
+import org.example.section8.domain.model.Shopper
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
