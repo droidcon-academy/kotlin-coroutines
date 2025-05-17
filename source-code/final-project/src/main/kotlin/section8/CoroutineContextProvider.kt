@@ -3,7 +3,7 @@ package org.example.section8
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
-class CoroutineContextProviderImpl(): CoroutineContextProvider {
+class CoroutineContextProviderImpl() : CoroutineContextProvider {
     override val defaultDispatcher: CoroutineContext by lazy { Dispatchers.Default }
     override val ioDispatcher: CoroutineContext by lazy { Dispatchers.IO }
 }

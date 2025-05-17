@@ -19,7 +19,6 @@ val ceh = CoroutineExceptionHandler { _, e ->
 
 interface Checkout {
     val state: StateFlow<CheckoutState>
-
     fun checkoutShopper(shopper: Shopper)
 }
 

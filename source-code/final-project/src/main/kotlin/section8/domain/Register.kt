@@ -10,6 +10,9 @@ import org.example.section8.CoroutineContextProviderImpl
 import org.example.section8.domain.model.CheckoutState
 import org.example.section8.domain.model.Shopper
 
+/**
+ *
+ */
 class Register(
     val scope: CoroutineScope,
     val checkoutShopper: Checkout, //CheckoutShopper,
@@ -31,12 +34,15 @@ class Register(
                     is CheckoutState.CheckoutSuccessLoyal -> {
                         log(
                             "State: CheckoutState.CheckoutSuccess - Checkout success " +
-                                    "for loyal customer ${state.checkout.name}."
+                                    "for loyal customer ${state.processed.name}."
                         )
                     }
 
                     is CheckoutState.CheckoutSuccess -> {
-                        log("State: CheckoutState.CheckoutSuccess - Checkout success for ${state.checkout.name}.")
+                        log(
+                            "State: CheckoutState.CheckoutSuccess - Checkout success " +
+                                    "for ${state.processed.name}."
+                        )
                     }
 
                     is CheckoutState.CheckoutError -> {
@@ -49,7 +55,6 @@ class Register(
             }
         }
     }
-
 
     fun startCheckout(shoppers: List<Shopper>) {
         scope.launch(dispatcher.defaultDispatcher) {
