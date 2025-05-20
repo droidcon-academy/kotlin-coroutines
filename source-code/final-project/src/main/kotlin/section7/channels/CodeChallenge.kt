@@ -6,6 +6,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.example.log
 import org.example.section7.Shopper
 import java.util.Collections
@@ -18,15 +20,9 @@ fun main(): Unit = runBlocking {
         Shopper("Amber", 4),
         Shopper("Ren", 3),
     )
+    val mutex = Mutex()
     val channel = Channel<Shopper>()			           // <-- 1. add here
     val orderOfCheckout = Collections.synchronizedList<Shopper>(mutableListOf<Shopper>())
-
-    val producers = launch(Dispatchers.Default) {
-        shoppers.map { shopper ->
-            channel.checkoutShopper(shopper)               // <-- 2. send elements from channel
-            log("curr order in child launch: ${shopper.name}       | snapshot: ${orderOfCheckout.map { it.name }}")
-        }
-    }.join()
 
     val consumer = launch(Dispatchers.Default) {
         for (i in channel) {
@@ -35,6 +31,16 @@ fun main(): Unit = runBlocking {
         }
     }
 
+    val producers = shoppers.map { shopper ->
+        launch(Dispatchers.Default) {
+            mutex.withLock {
+                channel.checkoutShopper(shopper)               // <-- 2. send elements from channel
+                log("curr order in child launch: ${shopper.name}       | snapshot: ${orderOfCheckout.map { it.name }}")
+            }
+        }
+    }
+
+    producers.joinAll()
     channel.close()
     consumer.join()
     println("Final order: ${orderOfCheckout.map { it.name }}")

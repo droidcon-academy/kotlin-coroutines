@@ -1,4 +1,4 @@
-package section8.domain.model
+package org.example.section9.domain.model
 
 sealed class CheckoutState {
     data object NotStarted : CheckoutState()

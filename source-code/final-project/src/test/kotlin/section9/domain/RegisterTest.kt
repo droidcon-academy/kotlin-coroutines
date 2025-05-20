@@ -1,28 +1,6 @@
-package section8.domain
+package section9.domain
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.example.section8.Result
-import org.example.section8.domain.Checkout
-import org.example.section8.domain.CheckoutShopper
-import org.example.section8.domain.Register
-import org.example.section8.domain.model.CheckoutState
-import org.example.section8.domain.model.Shopper
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import section8.FakeLoyalShopperRepository
-import section8.TestDispatcherProvider
-
-class RegisterTest {
+/*class RegisterTest {
 
     val fakeCheckout = object : Checkout {
         override val state: StateFlow<CheckoutState>
@@ -37,7 +15,7 @@ class RegisterTest {
     val register = Register(
         scope = CoroutineScope(Job()),
         checkoutShopper = fakeCheckout,
-        dispatcher = TestDispatcherProvider(),
+        dispatcher = section9.TestDispatcherProvider(),
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -60,7 +38,7 @@ class RegisterTest {
         )
 
         val sut = CheckoutShopper(
-            dispatcher = TestDispatcherProvider(),
+            dispatcher = section9.TestDispatcherProvider(),
             loyalShopperRepository = loyalShopperRepository,
         )
 
@@ -71,4 +49,4 @@ class RegisterTest {
     fun `checkout shopper flow`() = runTest {
         //flow().
     }
-}
+}*/

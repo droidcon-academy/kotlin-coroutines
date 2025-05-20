@@ -1,6 +1,6 @@
-package org.example.section8.data
+package org.example.section9.data
 
-import org.example.section8.Result
+import org.example.section9.Result
 
 interface LoyalShopperRepository {
     /**
