@@ -24,18 +24,16 @@ interface Checkout {
     fun checkoutShopper(shopper: Shopper)
 }
 
-class CheckoutShopper(
-    //private val scope: CoroutineScope,
+open class CheckoutShopper(
     private val loyalShopperRepository: LoyalShopperRepository,
+    private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher.defaultDispatcher),
     private val dispatcher: CoroutineContextProvider = CoroutineContextProviderImpl(),
-) {
+): Checkout {
 
     private val _state = MutableStateFlow<CheckoutState>(CheckoutState.NotStarted)
-    val state: StateFlow<CheckoutState> get() = _state.asStateFlow()
+    override val state: StateFlow<CheckoutState> get() = _state.asStateFlow()
 
-    private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher.defaultDispatcher)
-
-    fun checkoutShopper(shopper: Shopper) {
+    override fun checkoutShopper(shopper: Shopper) {
         _state.tryEmit(CheckoutState.InProgress)
 
         scope.launch(ceh) {

@@ -12,18 +12,15 @@ import org.example.section9.CoroutineContextProviderImpl
 import org.example.section9.domain.model.CheckoutState
 import org.example.section9.domain.model.Shopper
 
-/**
- *
- */
 class Register(
-    private val checkoutShopper: CheckoutShopper,
+    private val checkoutShopper: Checkout,
     private val dispatcher: CoroutineContextProvider = CoroutineContextProviderImpl(),
 ) {
 
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     init {
-        /*scope.launch(dispatcher.defaultDispatcher) {
+        scope.launch(dispatcher.defaultDispatcher) {
             checkoutShopper.state.collect { state ->
                 when (state) {
                     is CheckoutState.NotStarted -> {
@@ -54,12 +51,14 @@ class Register(
                                     "Cause of error: ${state.error.message}."
                         )
                     }
-                }*/
+                }
             }
+        }
+    }
 
     fun startCheckout(shoppers: List<Shopper>) {
         scope.launch(dispatcher.defaultDispatcher) {
-            val flow = flow()
+            val flow = flow(shoppers)
 
             flow.collect { shopper ->
                 log("shopper starting checkout: ${shopper.name}")
@@ -68,14 +67,7 @@ class Register(
         }
     }
 
-    fun flow(): Flow<Shopper> = flow {
-        listOf(
-            Shopper("id", "Jake", 3),
-            Shopper("id", "Zubin", 5),
-            Shopper("id", "Amber", 4),
-            Shopper("id", "REE", 3),
-        ).forEach {
-            emit(it)
-        }
+    fun flow(shoppers: List<Shopper>): Flow<Shopper> = flow {
+        shoppers.forEach { emit(it) }
     }
 }

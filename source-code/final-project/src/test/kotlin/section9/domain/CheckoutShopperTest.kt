@@ -9,7 +9,7 @@ import org.example.section9.domain.model.CheckoutState
 import org.example.section9.domain.model.Shopper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import section9.FakeLoyalShopperRepository
+import section9.data.FakeLoyalShopperRepository
 import section9.TestDispatcherProvider
 import section9.UnconfinedTestDispatcherProvider
 
@@ -40,9 +40,8 @@ internal class CheckoutShopperTest {
      *  - cooperates with runTest and scheduler
      *  - stable for async code
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `viewModel checks out shopper successfully execution order`() = runTest {
+    fun `viewModel checks out shopper successfully - testing control flow`() = runTest {
         // given
         val loyalShopperRepository = FakeLoyalShopperRepository(
             verifyShopperResult = Result.Success(true),
@@ -67,7 +66,7 @@ internal class CheckoutShopperTest {
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `viewModel checks out shopper successfully unconfined`() = runTest {
+    fun `viewModel checks out shopper successfully unconfined - eager execution`() = runTest {
         // given
         val loyalShopperRepository = FakeLoyalShopperRepository(
             verifyShopperResult = Result.Success(true),

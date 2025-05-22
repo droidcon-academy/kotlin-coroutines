@@ -1,9 +1,7 @@
-package org.example.section_2
+package org.example.section2
 
 import org.example.log
-import org.example.section1.CheckoutShopper
-import org.example.section1.Shopper
-import org.example.section1.checkoutHistory
+import org.example.section9.domain.model.Shopper
 import java.lang.Thread.sleep
 
 class checkoutLane(val shopper: Shopper) : Thread() {

@@ -1,7 +1,7 @@
-package section9
+package section9.data
 
-import org.example.section9.data.LoyalShopperRepository
 import org.example.section9.Result
+import org.example.section9.data.LoyalShopperRepository
 
 class FakeLoyalShopperRepository(
     val verifyShopperResult: Result<Boolean>,

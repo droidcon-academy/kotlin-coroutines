@@ -1,10 +1,8 @@
 package org.example.section1
 
-import org.example.log
-import java.lang.Thread.sleep
 import java.util.concurrent.Executors
 
-val checkoutHistory = HashMap<String, Int>()
+internal val checkoutHistory = HashMap<String, Int>()
 
 data class Shopper(var name: String, var items: Int)
 
@@ -26,49 +24,5 @@ fun main() {
         } finally {
             shutdown()
         }
-    }
-}
-
-
-class CheckoutLane(val shopper: Shopper) : Thread() {
-    override fun run() {
-        try {
-            println("    $name has ${shopper.items} items. Checking out...")
-
-            repeat(shopper.items) { item ->
-                val oldValue = checkoutHistory[name] ?: 0
-                checkoutHistory.put(name, oldValue + 1)
-                log("item $item scanned for $name.  | Checkout history check: ${checkoutHistory}")
-            }
-            println("    $name is checked out!")
-        } catch(e: InterruptedException) {
-            println("CheckoutLane Thread interrupted! $e")
-        }
-    }
-}
-
-class CheckoutShopper(
-    val name: String,
-    val numberOfItems: Int,
-) : Runnable {
-
-    private var running = true
-
-    override fun run() {
-        while (running) {
-            println("    $name has $numberOfItems items. Checking out...")
-
-            sleep(1000)
-            repeat(numberOfItems) { item ->
-                val oldValue = checkoutHistory[name] ?: 0
-                checkoutHistory.put(name, oldValue + 1)
-                log("item $item scanned for $name.  | Checkout history check: ${checkoutHistory}")
-            }
-            println("    $name is checked out!")
-        }
-    }
-
-    public fun stopThread() {
-        running = false
     }
 }
