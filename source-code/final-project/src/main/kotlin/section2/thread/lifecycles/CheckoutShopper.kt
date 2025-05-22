@@ -1,9 +1,7 @@
-package org.example.section2
+package org.example.section2.thread.lifecycles
 
 import org.example.log
-import java.lang.Thread.sleep
-
-private val checkoutHistory = HashMap<String, Int>()
+import kotlin.text.get
 
 /**
  * You can stop a thread cooperatively  by adding a volatile boolean flag.
@@ -19,7 +17,7 @@ class CheckoutShopper(
         while (running) {
             println("    $name has $numberOfItems items. Checking out...")
 
-            sleep(1000)
+            Thread.sleep(1000)
             repeat(numberOfItems) { item ->
                 val oldValue = checkoutHistory[name] ?: 0
                 checkoutHistory.put(name, oldValue + 1)

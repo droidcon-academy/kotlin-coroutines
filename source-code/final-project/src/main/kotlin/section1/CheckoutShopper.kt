@@ -1,21 +1,30 @@
 package org.example.section1
 
 import org.example.log
-import java.lang.Thread.sleep
 
+/**
+ * A Runnable tasks that checks out a shopper
+ *
+ * For every `CheckoutShopper`, a new thread is spawned to process a $numberOfItems.
+ * During the checkout, a shopper is added to the checkout history and each item is logged
+ * to simulate scanning.
+ *
+ * @param name - name of shopper
+ * @param numberOfItems - number of items in a shopper's cart
+ */
 internal class CheckoutShopper(
     val name: String,
     val numberOfItems: Int,
 ) : Runnable {
 
+    /**
+     * Runs work as a thread
+     */
     override fun run() {
         println("    $name has $numberOfItems items. Checking out...")
-
-        sleep(1000)
-        repeat(numberOfItems) { item ->
-            val oldValue = checkoutHistory[name] ?: 0
-            checkoutHistory.put(name, oldValue + 1)
-            log("item $item scanned for $name.  | Checkout history check: ${checkoutHistory}")
+        (1..numberOfItems).forEachIndexed { i, elem ->
+            log("item $elem scanned for $name.")
         }
+        println("    $name is checked out!")
     }
 }

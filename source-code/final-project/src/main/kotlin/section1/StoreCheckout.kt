@@ -2,23 +2,21 @@ package org.example.section1
 
 import java.util.concurrent.Executors
 
-internal val checkoutHistory = HashMap<String, Int>()
-
-data class Shopper(var name: String, var items: Int)
-
+/**
+ * Simulates shopper checkout for 3 shoppers in a single
+ */
 fun main() {
-    val checkoutLane = Executors.newFixedThreadPool(3)
+    val checkoutLane = Executors.newFixedThreadPool(2)
+
     val shopper1 = CheckoutShopper("Jake", 1)
-    val shopper2 = Shopper("Zubin", 10)
+    val shopper2 = CheckoutShopper("Zubin", 10)
     val shopper3 = CheckoutShopper("Amber", 4)
-    val shopper4 = CheckoutShopper("Jake", 2)
 
     checkoutLane.apply {
         try {
-            val thread = CheckoutLane(shopper2)
-            val future = submit { thread.start() }
-            thread.interrupt()
-            future.get()
+            submit { shopper1.run() }.get()
+            submit { shopper2.run() }.get()
+            submit { shopper3.run() }.get()
         } catch (e: Error) {
             println("Thread interrupted: $e")
         } finally {
