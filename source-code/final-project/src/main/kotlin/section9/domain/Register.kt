@@ -13,7 +13,7 @@ import org.example.section9.domain.model.CheckoutState
 import org.example.section9.domain.model.Shopper
 
 class Register(
-    private val checkoutShopper: Checkout,
+    internal val checkoutShopper: Checkout,
     private val dispatcher: CoroutineContextProvider = CoroutineContextProviderImpl(),
 ) {
 
@@ -48,7 +48,7 @@ class Register(
                     is CheckoutState.CheckoutError -> {
                         log(
                             "State: CheckoutState.CheckoutError - Checkout failed. " +
-                                    "Cause of error: ${state.error.message}."
+                                    "Cause of error: ${state.message}."
                         )
                     }
                 }
@@ -57,9 +57,9 @@ class Register(
     }
 
     fun startCheckout(shoppers: List<Shopper>) {
-        scope.launch(dispatcher.defaultDispatcher) {
-            val flow = flow(shoppers)
+        val flow = flow(shoppers)
 
+        scope.launch(dispatcher.defaultDispatcher) {
             flow.collect { shopper ->
                 log("shopper starting checkout: ${shopper.name}")
                 checkoutShopper.checkoutShopper(shopper)

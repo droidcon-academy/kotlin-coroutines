@@ -5,5 +5,5 @@ sealed class CheckoutState {
     data object InProgress : CheckoutState()
     data class CheckoutSuccess(val processed: Shopper) : CheckoutState()
     data class CheckoutSuccessLoyal(val processed: Shopper) : CheckoutState()
-    data class CheckoutError(val error: Error) : CheckoutState()
+    data class CheckoutError(val message: String) : CheckoutState()
 }

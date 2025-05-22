@@ -24,7 +24,7 @@ interface Checkout {
     fun checkoutShopper(shopper: Shopper)
 }
 
-open class CheckoutShopper(
+internal class CheckoutShopper(
     private val loyalShopperRepository: LoyalShopperRepository,
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher.defaultDispatcher),
     private val dispatcher: CoroutineContextProvider = CoroutineContextProviderImpl(),
@@ -53,8 +53,6 @@ open class CheckoutShopper(
                 result.data
             }
             is Result.Failure -> {
-                // would be better to log the exception and return false to prevent
-                // the app from breaking, but for now we
                 println("Unable to verify shopper discount")
                 false
             }
