@@ -1,7 +1,6 @@
-package section2
+package section2.thread.lifecycles
 
 import log
-import section2.thread.lifecycles.checkoutHistory
 
 data class Shopper(val name: String, val items: Int)
 
@@ -13,7 +12,7 @@ internal class CheckoutLane(val shopper: Shopper) : Thread() {
             repeat(shopper.items) { item ->
                 val oldValue = checkoutHistory[name] ?: 0
                 checkoutHistory.put(name, oldValue + 1)
-                log("item $item scanned for $name.  | Checkout history check: ${checkoutHistory}")
+                log("item $item scanned for $name.  | Checkout history check: $checkoutHistory")
             }
             println("    $name is checked out!")
         } catch (e: InterruptedException) {
