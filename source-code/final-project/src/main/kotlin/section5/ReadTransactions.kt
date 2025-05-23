@@ -15,22 +15,32 @@ data class CustomerTransaction(
 
 fun main(): Unit = runBlocking {
     try {
+        // Get URI to CSV file in the classpath
         val data = ClassLoader.getSystemResource("CustomerTransactionData.csv")?.toURI()
             ?: throw IllegalArgumentException("File not found")
 
+        // Launch async on the IO dispatcher to read and parse file
         val files = async(Dispatchers.IO) {
             File(data).readCsv().map { it.toString() }
         }
 
+        // Wait for result of the file processing and log transaction lines
         files.await().forEach {
             log(it)
         }
+
         log("Processed.")
     } catch (e: Exception) {
         log("Exception caught: ${e.message}")
     }
 }
 
+/**
+ * Extension function to read and parse a CSV file into a list of CustomerTransaction objects.
+ *
+ * @receiver File - the CSV file to parse
+ * @return a list of CustomerTransaction records or empty list
+ */
 private fun File.readCsv(): List<CustomerTransaction> {
     return try {
         log("Reading...")

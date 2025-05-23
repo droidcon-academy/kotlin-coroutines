@@ -1,4 +1,4 @@
-package org.example.section7.channels
+package org.example.section7
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -7,7 +7,6 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.example.log
-import org.example.section7.Shopper
 
 fun main(): Unit = runBlocking {
 

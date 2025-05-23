@@ -1,43 +1,10 @@
-package org.example.section7.flows
+package org.example.section8
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.example.log
-import kotlin.collections.forEach
-
-data class Shopper(
-    val name: String,
-    val groceryCartItems: Int,
-)
-
-sealed class CheckoutState {
-    data object NotStarted : CheckoutState()
-    data object InProgress : CheckoutState()
-    data class CheckoutSuccess(val shopper: Shopper) : CheckoutState()
-    data class CheckoutError(val error: Error) : CheckoutState()
-}
-
-fun main(): Unit = runBlocking {
-
-    val shoppers = listOf(
-        Shopper("Jake", 3),
-        Shopper("Zubin", 5),
-        Shopper("Amber", 4),
-        Shopper("Ren", 3)
-    )
-
-    val register = Register(this)
-    register.startCheckout(shoppers)
-}
 
 class Register(
     val scope: CoroutineScope,
@@ -71,20 +38,6 @@ class Register(
         scope.launch(Dispatchers.Default) {
             delay(100)
             checkoutShopper.checkoutShoppers(shoppers)
-        }
-    }
-}
-
-class CheckoutShopper() {
-    private val _state = MutableStateFlow<CheckoutState>(CheckoutState.NotStarted)
-    val state: StateFlow<CheckoutState> get() = _state.asStateFlow()
-
-
-    fun checkoutShoppers(list: List<Shopper>) {
-        _state.tryEmit(CheckoutState.InProgress)
-
-        list.forEach { shopper ->
-            _state.tryEmit(CheckoutState.CheckoutSuccess(shopper))
         }
     }
 }

@@ -6,8 +6,6 @@ import kotlinx.coroutines.runBlocking
 import org.example.log
 
 fun main(): Unit {
-    doSomeHeavyWork()
-
     runBlocking {
         log("main runBlocking    ")
 

@@ -1,4 +1,4 @@
-package org.example.section7.channels
+package org.example.section7
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -7,7 +7,6 @@ import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.example.log
-import org.example.section7.Shopper
 
 fun main(): Unit = runBlocking {
 
