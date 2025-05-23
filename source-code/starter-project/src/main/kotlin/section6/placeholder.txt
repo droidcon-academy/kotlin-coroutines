@@ -1,8 +1,7 @@
-Files made for this package:
+Section 6 Files:
 
 - CoroutineCancellation.kt
 - CoroutineExceptions.kt
-- CoroutineCancellationException.kt
 - CustomCoroutineExceptionHandler.kt
 - StoreCheckout.kt
 - SupervisorJobPlayground.kt
