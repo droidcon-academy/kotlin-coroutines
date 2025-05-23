@@ -1,5 +1,7 @@
 package org.example.section2.thread.lifecycles
 
+import org.example.section2.CheckoutLane
+import org.example.section2.Shopper
 import java.util.concurrent.Executors
 
 internal val checkoutHistory = HashMap<String, Int>()

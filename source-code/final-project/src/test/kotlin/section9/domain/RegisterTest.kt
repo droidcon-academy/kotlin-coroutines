@@ -6,13 +6,12 @@ import kotlinx.coroutines.test.runTest
 import org.example.section9.domain.model.CheckoutState
 import org.example.section9.domain.Register
 import org.example.section9.domain.model.Shopper
-import org.junit.jupiter.api.Assertions
 import section9.TestDispatcherProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * Testing hot + cold flows with Turbine
+ * Testing hot + cold flows with Turbine.
  */
 internal class RegisterTest {
 

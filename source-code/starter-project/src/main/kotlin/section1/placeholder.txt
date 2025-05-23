@@ -1,4 +1,5 @@
 Section 1 Files:
-- DangerZone
-- CheckoutShopper
-- StoreCheckout
+
+- DangerZone.kt
+- CheckoutShopper.kt
+- StoreCheckout.kt

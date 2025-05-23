@@ -1,8 +1,8 @@
-package org.example.section2.thread.lifecycles
+package section2.thread.lifecycles
 
+import section2.CheckoutLane
+import section2.Shopper
 import java.util.concurrent.Executors
-
-internal val checkoutHistory = HashMap<String, Int>()
 
 fun main() {
     val checkoutLane = Executors.newFixedThreadPool(3)
