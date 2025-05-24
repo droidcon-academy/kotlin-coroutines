@@ -19,20 +19,23 @@ fun main(): Unit = runBlocking {
         Shopper("Amber", 4),
         Shopper("Ren", 3),
     )
+    val mutex = Mutex()                                    // <-- 1. add here
     val channel = Channel<Shopper>()
-    val orderOfCheckout = mutableListOf<Shopper>()
-
-    val producers = shoppers.map { shopper ->
-        launch(Dispatchers.Default) {
-            log("curr order in child launch: ${shopper.name}")
-            channel.checkoutShopper(shopper)
-        }
-    }
+    val orderOfCheckout = Collections.synchronizedList<Shopper>(mutableListOf<Shopper>())
 
     val consumer = launch(Dispatchers.Default) {
         for (i in channel) {
             orderOfCheckout.add(i)
             log("curr order in parent: ${orderOfCheckout.map { it.name }}      ")
+        }
+    }
+
+    val producers = shoppers.map { shopper ->
+        launch(Dispatchers.Default) {
+           mutex.withLock {                               // <-- 2. add mutex lock
+                log("curr order in child launch: ${shopper.name}")
+                channel.checkoutShopper(shopper)
+           }
         }
     }
 

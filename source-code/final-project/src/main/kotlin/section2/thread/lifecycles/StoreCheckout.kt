@@ -1,10 +1,6 @@
 package org.example.section2.thread.lifecycles
 
-import org.example.section2.CheckoutLane
-import org.example.section2.Shopper
 import java.util.concurrent.Executors
-
-internal val checkoutHistory = HashMap<String, Int>()
 
 fun main() {
     val checkoutLane = Executors.newFixedThreadPool(3)
@@ -12,9 +8,9 @@ fun main() {
 
     checkoutLane.apply {
         try {
-            val thread = CheckoutLane(shopper)
-            val future = submit { thread.start() }
-            thread.interrupt()
+            val checkout = CheckoutLane(shopper)
+            val future = submit { checkout.start() }
+            checkout.interrupt()
             future.get()
         } catch (e: Error) {
             println("Thread interrupted: $e")
