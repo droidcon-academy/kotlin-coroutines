@@ -50,7 +50,7 @@ fun shoppers(): Flow<Shopper> = flow {
         log("  shopper emitted: ${it.name}")
         emit(it)
     }
-}
+}.flowOn(Dispatchers.Default)
     .onCompletion {
         log("Shopper flow completed")
     }

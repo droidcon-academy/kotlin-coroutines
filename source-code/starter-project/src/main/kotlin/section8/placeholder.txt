@@ -1,0 +1,8 @@
+Section 7 Files:
+
+- Shopper.kt
+- CoroutineLaunches.kt
+- ShopperChannel.kt
+- CodeChallenge.kt
+- CodeChallengeSolution.kt
+- ProducerConsumerChannels.kt

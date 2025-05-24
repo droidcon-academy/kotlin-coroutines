@@ -18,19 +18,6 @@ sealed class CheckoutState {
     data class CheckoutError(val error: Error) : CheckoutState()
 }
 
-fun main(): Unit = runBlocking {
-
-    val shoppers = listOf(
-        Shopper("Jake", 3),
-        Shopper("Zubin", 5),
-        Shopper("Amber", 4),
-        Shopper("Ren", 3)
-    )
-
-    val register = Register(this)
-    register.startCheckout(shoppers)
-}
-
 class CheckoutShopper() {
     private val _state = MutableStateFlow<CheckoutState>(CheckoutState.NotStarted)
     val state: StateFlow<CheckoutState> get() = _state.asStateFlow()
@@ -40,6 +27,7 @@ class CheckoutShopper() {
         _state.tryEmit(CheckoutState.InProgress)
 
         list.forEach { shopper ->
+            // checkout background work here
             _state.tryEmit(CheckoutState.CheckoutSuccess(shopper))
         }
     }

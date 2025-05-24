@@ -2,14 +2,16 @@ package org.example.section8
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.example.log
 
 class Register(
-    val scope: CoroutineScope,
     val checkoutShopper: CheckoutShopper = CheckoutShopper(),
 ) {
+
+    val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     init {
         scope.launch(Dispatchers.Default) {

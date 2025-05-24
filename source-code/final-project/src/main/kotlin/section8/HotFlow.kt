@@ -5,7 +5,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
@@ -17,21 +16,19 @@ import org.example.log
 fun main(): Unit = runBlocking {
 
     val orderOfCheckout = mutableListOf<Shopper>()
-    val scope = CoroutineScope(Dispatchers.Default)
 
     // flow is hot and running
     val statefulShoppers: StateFlow<Shopper?> = shoppers()
         .stateIn(
-            scope = scope,
+            scope = this,
             started = SharingStarted.Eagerly,
             initialValue = null
         )
 
-    scope.launch {
-        statefulShoppers.collect { shopper ->
-            log("shopper collected: ${shopper?.name}")
-            shopper?.let { shopper }
-        }
+
+    statefulShoppers.collect { shopper ->
+        log("shopper collected: ${shopper?.name}")
+        shopper?.let { shopper }
     }
 
     log("Final order: ${orderOfCheckout.map { it.name }}")
