@@ -1,9 +1,12 @@
 package org.example.section8
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.runBlocking
 import org.example.log
 
@@ -47,9 +50,10 @@ fun shoppers(): Flow<Shopper> = flow {
         log("  shopper emitted: ${it.name}")
         emit(it)
     }
-}.onCompletion {
-    log("Shopper flow completed")
 }
+    .onCompletion {
+        log("Shopper flow completed")
+    }
 
 /**
  * Creates a Flow that emits a list of Shopper objects one by one.

@@ -1,0 +1,7 @@
+Section 2 Files:
+
+- /thread.lifecycles
+    - CheckoutShopper.kt
+    - StoreCheckout.kt
+    - Shoppers.kt
+-

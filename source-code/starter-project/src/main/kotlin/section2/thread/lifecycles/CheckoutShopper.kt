@@ -1,10 +1,10 @@
 package section2.thread.lifecycles
 
-import log
-import java.lang.Thread.sleep
-
 /**
- * not thread-safe* data structure.
+ * Intentionally **not thread-safe** structure for demonstration purposes.
+ *
+ * When accessed by multiple threads concurrently, the map gets race conditions,
+ * creating inconsistent or corrupted state.
  */
 internal val checkoutHistory = HashMap<String, Int>()
 
@@ -13,23 +13,15 @@ internal val checkoutHistory = HashMap<String, Int>()
  *
  * Demonstrates how to get a thread to cooperatively cancel by adding a volatile boolean flag.
  *
- * @param name - name of shopper
- * @param numberOfItems - the amount of items in the shopper's cart for scanning
+ * @param shopper - shopper getting checked out in line
  */
-class CheckoutShopper(
-    val name: String,
-    val numberOfItems: Int,
-) : Runnable {
-
+internal class CheckoutLane(val shopper: Shopper) : Thread() {
     override fun run() {
-        println("    $name has $numberOfItems items. Checking out...")
-
-        sleep(1000)
-        repeat(numberOfItems) { item ->
-            val oldValue = checkoutHistory[name] ?: 0
-            checkoutHistory.put(name, oldValue + 1)
-            log("item $item scanned for $name.  | Checkout history check: ${checkoutHistory}")
+        println("    $name has ${shopper.items} items. Checking out...")
+        repeat(shopper.items) { item ->
+          // TODO
         }
         println("    $name is checked out!")
     }
 }
+

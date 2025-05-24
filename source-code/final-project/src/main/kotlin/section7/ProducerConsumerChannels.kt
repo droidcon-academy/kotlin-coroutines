@@ -28,9 +28,11 @@ fun main(): Unit = runBlocking {
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-private fun CoroutineScope.checkoutLane(shoppers: List<Shopper>) = produce {
+private fun CoroutineScope.checkoutLane(
+    shoppers: List<Shopper>
+): ReceiveChannel<Shopper> = produce(capacity = 2) {		// <-- backpressure here
     shoppers.forEach { shopper ->
-        delay(10)
+        delay(100)						                    // <-- suspends if buffer is full
         send(shopper)
     }
 }
