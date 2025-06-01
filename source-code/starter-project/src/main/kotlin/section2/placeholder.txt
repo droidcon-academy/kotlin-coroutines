@@ -1,7 +1,9 @@
 Section 2 Files:
 
 - /thread.lifecycles
-    - CheckoutShopper.kt
+    - CheckoutLane.kt
+    - Shopper.kt
     - StoreCheckout.kt
-    - Shoppers.kt
--
+- MyFirstCoroutine.kt
+- BlockingCoroutines.kt
+- SuspendingCoroutines.kt
