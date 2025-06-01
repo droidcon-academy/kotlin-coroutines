@@ -1,8 +1,7 @@
-Section 7 Files:
+Section 8 Files:
 
-- Shopper.kt
-- CoroutineLaunches.kt
-- ShopperChannel.kt
-- CodeChallenge.kt
-- CodeChallengeSolution.kt
-- ProducerConsumerChannels.kt
+- CheckoutShoppers.kt
+- IntroToFlow.kt
+- HotFlow.kt
+- Register.kt
+- GroceryStore.kt

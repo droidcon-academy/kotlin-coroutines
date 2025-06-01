@@ -1,5 +1,6 @@
 package org.example.section2.thread.lifecycles
 
+import java.lang.Thread.sleep
 import java.util.concurrent.Executors
 
 fun main() {
@@ -9,7 +10,10 @@ fun main() {
     checkoutLane.apply {
         try {
             val checkout = CheckoutLane(shopper)
-            val future = submit { checkout.start() }
+            val future = submit {
+                checkout.start()
+                sleep(300)
+            }
             checkout.interrupt()
             future.get()
         } catch (e: Error) {

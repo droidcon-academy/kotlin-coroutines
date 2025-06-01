@@ -34,5 +34,3 @@ internal class CheckoutLane(val shopper: Shopper) : Thread() {
         }
     }
 }
-
-internal data class Shopper(val name: String, val items: Int)
