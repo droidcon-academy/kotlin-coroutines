@@ -13,6 +13,11 @@ import section9.TestDispatcherProvider
 import section9.UnconfinedTestDispatcherProvider
 import kotlin.test.assertEquals
 
+/**
+ * Trying out the Coroutine Testing Framework. This test demonstrates use of:
+ * - StandardTestDispatcher
+ * - UnconfinedTestDispatcher
+ */
 internal class CheckoutShopperTest {
 
     private val shopper = Shopper("id", "Jake", 3)
