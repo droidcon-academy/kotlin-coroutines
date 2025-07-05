@@ -6,6 +6,9 @@ import kotlinx.coroutines.runBlocking
 import org.example.log
 import java.io.File
 
+/**
+ * Data class representing a single customer transaction.
+ **/
 data class CustomerTransaction(
     val id: String,
     val name: String,
@@ -13,6 +16,12 @@ data class CustomerTransaction(
     val amount: Double,
 )
 
+/**
+ * Main entry point of the program.
+ *
+ * This coroutine reads a CSV file of customer transactions asynchronously using the IO dispatcher.
+ * It parses the contents into `CustomerTransaction` objects and logs each one.
+ */
 fun main(): Unit = runBlocking {
     try {
         // Get URI to CSV file in the classpath
