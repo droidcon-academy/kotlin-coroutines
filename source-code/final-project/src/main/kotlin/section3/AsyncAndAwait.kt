@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 import org.example.log
 
 /**
- * `async` 	- Launches a coroutine that returns a result. Runs concurrently.
+ * `async` 	- Launches a coroutine that returns a result. Runs concurrently. Also returns a `Job` like `launch`.
  * `await()` - Suspends the calling coroutine until the async task finishes and returns a value.
  *
  * Execution Order:

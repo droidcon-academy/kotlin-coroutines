@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 import org.example.log
 
 /**
- * This example demonstrates how launch returns a job.
+ * This example demonstrates how launch returns a `Job` type.
  *
  * Execution order:
  *
