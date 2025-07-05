@@ -8,6 +8,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.example.log
 
+/**
+ * `async` 	- Launches a coroutine that returns a result. Runs concurrently.
+ * `await()` - Suspends the calling coroutine until the async task finishes and returns a value.
+ *
+ * Execution Order:
+ *
+ * 1. The `main()` function uses runBlocking to provide a coroutine scope and block the main thread until all
+ *    coroutines complete.
+ * 2. Two concurrent background tasks are launched using `async`, which allows them to run in parallel and return results.
+ * 3. The program then uses `await()` to suspend until both `async` tasks finish.
+ * 4. Results are printed and the program ends.
+ */
 fun main() = runBlocking {
     log("main runBlocking	")
     log("Start job")
