@@ -11,6 +11,16 @@ import kotlinx.coroutines.sync.withLock
 import org.example.log
 import java.util.Collections
 
+/**
+ * Main function demonstrating a producer-consumer pattern using Kotlin coroutines and channels.
+ *
+ * - Creates multiple producer coroutines that simulate shoppers checking out.
+ * - Sends shoppers through a [Channel] to a single consumer coroutine.
+ * - The consumer records the order in which shoppers finish checkout.
+ *
+ * **Note:** The shared mutable list [orderOfCheckout] is accessed concurrently
+ * without synchronization, which may cause race conditions in real-world scenarios.
+ */
 fun main(): Unit = runBlocking {
 
     val shoppers = listOf(
@@ -42,8 +52,14 @@ fun main(): Unit = runBlocking {
     println("Final order: ${orderOfCheckout.map { it.name }}")
 }
 
-
-// Channel extension function
+/**
+ * Extension function to simulate checkout processing for a shopper,
+ * then send the shopper into the channel.
+ *
+ * @param shopper The shopper to send.
+ *
+ * Simulates background work by delaying before sending.
+ */
 private suspend fun Channel<Shopper>.checkoutShopper(shopper: Shopper) {
     delay(10)                  // simulate background work
     this.send(shopper)         // send result from child

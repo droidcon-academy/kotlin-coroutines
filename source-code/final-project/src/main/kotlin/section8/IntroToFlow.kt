@@ -26,7 +26,7 @@ fun main(): Unit = runBlocking {
     val orderOfCheckout = mutableListOf<Shopper>()
 
     // flow "turns" on - flow is hot
-    flow.collect { shopper ->
+   flow.collect { shopper ->
         log("shopper collected: ${shopper.name}")
         orderOfCheckout.add(shopper)
     }
@@ -50,7 +50,8 @@ fun shoppers(): Flow<Shopper> = flow {
         log("  shopper emitted: ${it.name}")
         emit(it)
     }
-}.flowOn(Dispatchers.Default)
+}
+    .flowOn(Dispatchers.Default)
     .onCompletion {
         log("Shopper flow completed")
     }
@@ -66,7 +67,7 @@ fun shoppersError(): Flow<Shopper> = flow {
     listOf(
         Shopper("Jake", 3),
         Shopper("Zubin", 5),
-        throw Exception("flow failed"),
+        throw Exception("flow failed"),     // throw exception here
         Shopper("Ren", 3),
     ).forEach {
         log("shopper collected: ${it.name}")

@@ -1,7 +1,10 @@
 package org.example.section8
 
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.collections.forEach
 
@@ -30,8 +33,8 @@ sealed class CheckoutState {
  * Manages the checkout process and exposes its state as a reactive flow.
  */
 class CheckoutShopper() {
-    private val _state = MutableStateFlow<CheckoutState>(CheckoutState.NotStarted)
-    val state: StateFlow<CheckoutState> get() = _state.asStateFlow()
+    private val _state = MutableSharedFlow<CheckoutState>()
+    val state: SharedFlow<CheckoutState> get() = _state.asSharedFlow()
 
     /**
      * Begins the checkout process for a list of shoppers.

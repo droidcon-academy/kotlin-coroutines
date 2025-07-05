@@ -11,6 +11,15 @@ import kotlinx.coroutines.sync.withLock
 import org.example.log
 import java.util.Collections
 
+/**
+ * Main function demonstrating concurrent producer-consumer pattern with synchronization.
+ *
+ * The program:
+ * - Creates a list of shoppers.
+ * - Uses a [Channel] to send shoppers from producer coroutines to a consumer coroutine.
+ * - Uses a [Mutex] to ensure mutual exclusion around sending shoppers to the channel.
+ * - Uses a thread-safe synchronized list to track the order of checkout.
+ */
 fun main(): Unit = runBlocking {
 
     val shoppers = listOf(
