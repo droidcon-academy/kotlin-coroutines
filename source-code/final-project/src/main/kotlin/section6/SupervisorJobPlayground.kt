@@ -10,8 +10,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.example.log
 
+/**
+ * Demonstrates exception handling in coroutines using SupervisorJob.
+ *
+ * This example shows how a failure in one child coroutine (`job1`)
+ * does NOT cancel sibling coroutines (`job2`) when using a SupervisorJob.
+ */
 fun main() = runBlocking {
     log("main runBlocking     ")
+
+    // Create a CoroutineScope with SupervisorJob, allowing children to fail independently
     val scope = CoroutineScope(SupervisorJob())	// <-- change here
 
     val job1 = scope.launch {

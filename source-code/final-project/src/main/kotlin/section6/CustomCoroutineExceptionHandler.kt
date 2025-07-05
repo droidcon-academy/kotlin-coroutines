@@ -10,6 +10,12 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
 import org.example.log
 
+/**
+ * Demonstrates usage of a custom CoroutineExceptionHandler with SupervisorJob and supervisorScope.
+ *
+ * Shows how uncaught exceptions in child coroutines are handled by the CoroutineExceptionHandler
+ * without cancelling sibling coroutines.
+ */
 fun main(): Unit = runBlocking {
 
     val ceh = CoroutineExceptionHandler { _, e ->
@@ -17,6 +23,8 @@ fun main(): Unit = runBlocking {
     }
 
     log("main runBlocking     ")
+
+    // Allows child coroutines to fail independently without cancelling siblings
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     val job = scope.launch(ceh) {
