@@ -11,7 +11,7 @@ fun main() {
 
     checkoutLane.apply {
         try {
-            val checkout = CheckoutLane(shopper)
+            val checkout = CheckoutShopper(shopper)
 
             // Submit the checkout task to the executor
             val future = submit {
