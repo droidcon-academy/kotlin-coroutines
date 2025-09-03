@@ -1,5 +1,7 @@
 package section2.thread.lifecycles
 
+import log
+
 /**
  * Intentionally **not thread-safe** structure for demonstration purposes.
  *
@@ -15,11 +17,12 @@ internal val checkoutHistory = HashMap<String, Int>()
  *
  * @param shopper - shopper getting checked out in line
  */
-internal class CheckoutLane(val shopper: Shopper) : Thread() {
+internal class CheckoutShopper(val shopper: Shopper) : Thread() {
+
     override fun run() {
         println("    $name has ${shopper.items} items. Checking out...")
         repeat(shopper.items) { item ->
-          // TODO
+            // TODO
         }
         println("    $name is checked out!")
     }

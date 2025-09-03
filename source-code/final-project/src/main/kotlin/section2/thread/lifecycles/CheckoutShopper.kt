@@ -1,6 +1,8 @@
 package org.example.section2.thread.lifecycles
 
 import org.example.log
+import java.io.IO.println
+import java.util.HashMap
 
 /**
  * Intentionally **not thread-safe** structure for demonstration purposes.
@@ -17,7 +19,7 @@ internal val checkoutHistory = HashMap<String, Int>()
  *
  * @param shopper - shopper processed for checkout
  */
-internal class CheckoutLane(val shopper: Shopper) : Thread() {
+internal class CheckoutShopper(val shopper: Shopper) : Thread() {
 
     override fun run() {
         try {
